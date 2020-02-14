@@ -1,0 +1,111 @@
+{{ edit_message }}
+
+variable "cloudflare_zone" {}
+variable "domain_name" {}
+
+resource "aws_s3_bucket" "public" {
+  bucket = "{% if not no_www %}www.{% endif %}${var.domain_name}"
+  force_destroy = true
+  acl    = "public-read"
+
+  website {
+    index_document = "index.html"
+    error_document = "error.html"
+    routing_rules = <<EOF
+    [{
+        "Condition": {
+            "HttpErrorCodeReturnedEquals": "403"
+        },
+        "Redirect": {
+            "HostName": "{% if not no_www %}www.{% endif %}${var.domain_name}",
+            "ReplaceKeyPrefixWith": "#!/"
+        }
+    },
+    {
+        "Condition": {
+            "HttpErrorCodeReturnedEquals": "404"
+        },
+        "Redirect": {
+            "HostName": "{% if not no_www %}www.{% endif %}${var.domain_name}",
+            "ReplaceKeyPrefixWith": "#!/"
+        }
+    }]
+    EOF
+
+  }
+}
+
+resource "cloudflare_record" "public" {
+  zone_id = "${var.cloudflare_zone}"
+  name = "${var.domain_name}"
+  value = "${aws_s3_bucket.public.website_domain}"
+  type = "CNAME"
+  ttl = 1
+  proxied = true
+}
+
+resource "cloudflare_record" "public_www" {
+  zone_id = "${var.cloudflare_zone}"
+  name = "www.${var.domain_name}"
+  value = "${var.domain_name}"
+  type = "CNAME"
+  ttl = 1
+  proxied = true
+}
+
+# force https
+resource "cloudflare_worker_route" "cf_route_https" {
+  zone_id = "${var.cloudflare_zone}"
+  pattern = "{% if not no_www %}www.{% endif %}${var.domain_name}/*"
+  script_name = "${cloudflare_worker_script.cf_script_https.name}"
+}
+
+# cf worker to force https so you dont use all 3 free page rules
+resource "cloudflare_worker_script" "cf_script_https" {
+  name = "https_redirects"
+  content = <<EOF
+addEventListener('fetch', event => {
+  event.respondWith(bulkRedirects(event.request))
+})
+
+async function bulkRedirects(request) {
+    // force https
+    if(request.url.startsWith("http://")) {
+      loc = request.url.replace("http://", "https://")
+      return Response.redirect(loc, 307) 
+    }
+  return fetch(request)
+}
+EOF
+}
+
+# redirect www to non www
+resource "cloudflare_worker_route" "cf_route_www" {
+  zone_id = "${var.cloudflare_zone}"
+  pattern = "{% if no_www %}www.{% endif %}${var.domain_name}/*"
+  script_name = "${cloudflare_worker_script.cf_script_www.name}"
+}
+
+resource "cloudflare_worker_script" "cf_script_www" {
+  name = "www_redirects"
+  content = <<EOF
+addEventListener('fetch', event => {
+  event.respondWith(bulkRedirects(event.request))
+})
+
+async function bulkRedirects(request) {
+    // force https
+    if(request.url.startsWith("http://")) {
+      loc = request.url.replace("http://", "https://")
+      return Response.redirect(loc, 307) 
+    }
+
+    // redirect www to non www based on domain name
+    if(request.url.startsWith("https://{% if no_www %}www.{% endif %}${var.domain_name}")) {
+      loc = request.url.replace("https://{% if no_www %}www.{% endif %}${var.domain_name}", "https://{% if not no_www %}www.{% endif %}${var.domain_name}")
+      return Response.redirect(loc, 307) 
+    }
+  return fetch(request)
+}
+EOF
+}

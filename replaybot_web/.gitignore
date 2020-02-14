@@ -1,0 +1,7 @@
+.terraform/*
+.tfdata/*
+*__pycache__
+.env
+public/*
+*.tf
+pkghash.json

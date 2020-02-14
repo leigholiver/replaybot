@@ -1,0 +1,14 @@
+#!/usr/bin/env python3
+import sys, os
+sys.path.insert(0,os.path.dirname(os.path.realpath(__file__)) + "/api")
+
+try:
+    cmd = sys.argv[1].lower()
+    c = getattr(getattr(__import__("commands." + cmd), cmd), cmd)
+except Exception as e:
+    print(e)
+    print("Unknown Command")
+    sys.exit(1)
+
+c = c()
+c.run(sys.argv[2:])

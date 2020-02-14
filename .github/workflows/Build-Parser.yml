@@ -1,0 +1,28 @@
+name: Build-Parser
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - ".github/workflows/Build-Parser.yml"
+      - "replaybot_parser/**"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Build Image
+        working-directory: ./replaybot_parser
+        run: |
+          docker build -t ${{ secrets.dockerhubUsername }}/replaybot_parser .
+      
+      - name: Login to docker repos
+        run: echo ${{ secrets.dockerhubPassword }} | docker login -u ${{ secrets.dockerhubUsername }} --password-stdin
+      
+      - name: Tag and push
+        run: |
+          docker tag ${{ secrets.dockerhubUsername }}/replaybot_parser ${{ secrets.dockerhubUsername }}/replaybot_parser:latest
+          docker push ${{ secrets.dockerhubUsername }}/replaybot_parser:latest

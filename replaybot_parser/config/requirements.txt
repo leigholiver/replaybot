@@ -1,0 +1,6 @@
+uwsgi
+Flask
+mpyq
+uuid
+requests
+s2protocol
