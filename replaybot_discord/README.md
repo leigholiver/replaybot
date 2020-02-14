@@ -31,6 +31,4 @@ python mock_server.py
 # change this to whatever your parser endpoint is
 # you need the docker host ip instead of localhost
 export PARSER_ENDPOINT=http://$(ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+'):8119
-
-
 ```
