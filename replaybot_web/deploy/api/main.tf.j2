@@ -17,7 +17,7 @@ variable "BOT_SHARED_KEY" {}
 # it looks tempting to decrease lambda_memory becuase cloudwatch reckons you 
 # only use max 80mb, but it actually starts to time out if you drop it?
 variable "lambda_memory" { default = 256 } # in mb
-variable "lambda_timeout" { default = 4 } # in seconds
+variable "lambda_timeout" { default = 8 } # in seconds
 
 # API Gateway
 resource "aws_api_gateway_rest_api" "api" {
