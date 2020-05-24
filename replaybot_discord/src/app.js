@@ -65,7 +65,14 @@ function postEmbed(channel, message, attachment, callback) {
 
 /* notify the web service that we have joined or left a server */
 function serverChanges() {
-    let newServers = [...client.guilds.values()];
+    let newServers = [];
+    try {
+        newServers = [...client.guilds.cache.values()];
+    }
+    catch(err) {
+        console.log("error getting guilds");
+        console.log(client.guilds.cache);
+    }     
 
     newServers.filter(item => !servers.includes(item)).forEach(item => {
         join(item.id);
@@ -80,4 +87,4 @@ function serverChanges() {
     servers = newServers;
 }
 
-client.login(process.env.DISCORD_TOKEN);
+client.login(process.env.BOT_TOKEN);

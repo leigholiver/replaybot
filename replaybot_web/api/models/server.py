@@ -1,10 +1,12 @@
 import datetime
-from support.lamb.Model import Model
 from boto3.dynamodb.conditions import Key
+from framework.lamb.model import model
 
-class server(Model):
+class server(model):
     def __init__(self, id = None):
         super(server, self).__init__()
+        
+        # the name of the dynamodb table 
         self.table = "server"
 
         # discords server id

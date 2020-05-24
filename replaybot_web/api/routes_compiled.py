@@ -2,12 +2,12 @@
 routes = {
     "GET": [
         {
-            "action": "server_controller.get_server_joined",
+            "action": "server.get_server_joined",
             "middleware": [],
             "path": "\\/servers\\/(?P<id>.*?)\\/joined\\/?$"
         },
         {
-            "action": "server_controller.get_server",
+            "action": "server.get_server",
             "middleware": [],
             "path": "\\/servers\\/(?P<id>.*?)\\/?$"
         },
@@ -29,26 +29,26 @@ routes = {
             "path": "\\/discord-code\\/?$"
         },
         {
-            "action": "server_controller.set_server",
+            "action": "server.set_server",
             "middleware": [],
             "path": "\\/servers\\/(?P<id>.*?)\\/edit\\/?$"
         },
         {
-            "action": "server_controller.store_replay",
+            "action": "server.store_replay",
             "middleware": [
                 "hasbottoken"
             ],
             "path": "\\/servers\\/(?P<id>.*?)\\/store\\/?$"
         },
         {
-            "action": "server_controller.join",
+            "action": "server.join",
             "middleware": [
                 "hasbottoken"
             ],
             "path": "\\/join\\/(?P<id>.*?)\\/?$"
         },
         {
-            "action": "server_controller.leave",
+            "action": "server.leave",
             "middleware": [
                 "hasbottoken"
             ],

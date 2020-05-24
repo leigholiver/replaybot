@@ -1,17 +1,18 @@
-version: '3.3'
+version: '3.4'
 
 services:
     parser:
         image: leigholiver/replaybot_parser
         build: ./replaybot_parser
-        ports:
-            - "8119:80"
+        network_mode: host
 
     discord:
         image: leigholiver/replaybot_discord
         build: ./replaybot_discord
+        network_mode: host
         environment:
-            - "DISCORD_TOKEN=${TF_VAR_BOT_TOKEN}"
-            - "PARSER_ENDPOINT=http://parser"
-            - "API_ENDPOINT=https://$TF_VAR_domain_name/$TF_VAR_api_path"
-            - "API_TOKEN=${TF_VAR_BOT_SHARED_KEY}"
+            - BOT_TOKEN
+            - BOT_SHARED_KEY
+            - "PARSER_ENDPOINT=http://localhost:5001"
+            - "API_ENDPOINT=http://localhost:5000/api"
+            #- "API_ENDPOINT=https://preprod.replaybot.com/api"

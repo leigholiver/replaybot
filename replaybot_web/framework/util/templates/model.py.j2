@@ -1,0 +1,17 @@
+from framework.lamb.model import model
+
+class {{ name }}(model):
+    def __init__(self):
+        super({{ name }}, self).__init__()
+        
+        # the name of the dynamodb table 
+        self.table = "{{ name|lower() }}"
+
+        # list of str, fields which are allowed
+        # to be updated from the api
+        self.fillable = []
+
+        # list of fields to use as string 
+        # indexes you will be able to use 
+        # these as parameters for {{ name }}.find()
+        self.indexes = []

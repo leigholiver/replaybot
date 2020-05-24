@@ -1,6 +1,6 @@
-from support.lamb.Controller import Controller
+from framework.lamb.controller import controller
 
-class default(Controller):
+class default(controller):
     def ping(self, event):
         # process the event here and return a response
         

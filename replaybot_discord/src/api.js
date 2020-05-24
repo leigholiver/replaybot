@@ -40,7 +40,7 @@ function leave(server) {
 async function request(method, url, data = null, headers = {}) {
     headers = { 
         "Content-Type": "application/json", 
-        "X-Replaybot-Token": process.env.API_TOKEN,
+        "X-Replaybot-Token": process.env.BOT_SHARED_KEY,
         ...headers 
     }
     try {
