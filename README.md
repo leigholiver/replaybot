@@ -4,6 +4,8 @@ a discord bot to post information about sc2 replays
 
 [replaybot.com](https://www.replaybot.com)
 
+![Tests](https://github.com/leigholiver/replaybot/workflows/Tests/badge.svg) ![Deployment](https://github.com/leigholiver/replaybot/workflows/Deployment/badge.svg)
+![Build-Parser](https://github.com/leigholiver/replaybot/workflows/Build-Parser/badge.svg) ![Build-Discord](https://github.com/leigholiver/replaybot/workflows/Build-Discord/badge.svg)
 
 #### Development server
 
