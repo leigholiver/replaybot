@@ -26,7 +26,7 @@ jobs:
           pip install -r api/packages.txt
           
       - name: Install frontend dependencies
-        working-directory: frontend
+        working-directory: ./replaybot_web/frontend
         run: |
           yarn install
 
