@@ -26,4 +26,5 @@ jobs:
       - name: Run tests
         working-directory: ./replaybot_web
         run: |
+          echo "${{ secrets.secrets }}" > secrets.env
           ./lambctl tests
