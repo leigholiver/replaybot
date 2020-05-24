@@ -29,7 +29,7 @@ client.on('message', message => {
                         
                         let channel = message.channel;
                         if(server.replyTo != "reply") {
-                            channel = message.guild.channels.get(server.replyTo);
+                            channel = message.guild.channels.cache.get(server.replyTo);
                         }
                         postEmbed(channel, message, attachment, (message, attachment, replayData) => {
                             store({
@@ -40,8 +40,9 @@ client.on('message', message => {
                         });
                     }
                 })
-                .catch(() => {
+                .catch((e) => {
                     // couldn't reach the web service - default to basic reply mode
+                    console.log(e)
                     postEmbed(message.channel, message, attachment, (message, attachment, replayData) => {});
                 });
             }
@@ -65,7 +66,14 @@ function postEmbed(channel, message, attachment, callback) {
 
 /* notify the web service that we have joined or left a server */
 function serverChanges() {
-    let newServers = [...client.guilds.values()];
+    let newServers = [];
+    try {
+        newServers = [...client.guilds.cache.values()];
+    }
+    catch(err) {
+        console.log("error getting guilds");
+        console.log(client.guilds.cache);
+    }     
 
     newServers.filter(item => !servers.includes(item)).forEach(item => {
         join(item.id);
@@ -80,4 +88,4 @@ function serverChanges() {
     servers = newServers;
 }
 
-client.login(process.env.DISCORD_TOKEN);
+client.login(process.env.BOT_TOKEN);

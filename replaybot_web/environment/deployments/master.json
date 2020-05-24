@@ -1,0 +1,12 @@
+{
+    "env_name": "master",
+    "domain_name": "replaybot.com",
+    "branch_specifier": "master",
+    "env_vars": {
+        "REDIRECT_URI": "https://replaybot.com",
+        "CLIENT_ID": "{{ secrets.PRODUCTION_CLIENT_ID }}",
+        "CLIENT_SECRET": "{{ secrets.PRODUCTION_CLIENT_SECRET }}",
+        "BOT_TOKEN": "{{ secrets.PRODUCTION_BOT_TOKEN }}",
+        "BOT_SHARED_KEY": "{{ secrets.PRODUCTION_BOT_SHARED_KEY }}"
+    }
+}

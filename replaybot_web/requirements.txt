@@ -1,4 +1,0 @@
-jinja2
-boto3
-uuid
-markdown2

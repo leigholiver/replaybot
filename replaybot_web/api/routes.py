@@ -1,10 +1,9 @@
 ##
 # {
 #     methods: [ "GET" and/or "POST" ]
-#     action: ControllerClass.function
+#     action: controller_class.function
 #     middleware: [] # array of middleware class names to apply to the route
 # }
-# if you update this file, you must run ./lambctl make routes
 ##
 routes = {
     "/discord-code": { 
@@ -14,22 +13,22 @@ routes = {
     },
     "/servers/(id)/joined": { 
         "methods": [ "GET" ],
-        "action": "server_controller.get_server_joined",
+        "action": "server.get_server_joined",
         "middleware": []
     },
     "/servers/(id)": { 
         "methods": [ "GET" ],
-        "action": "server_controller.get_server",
+        "action": "server.get_server",
         "middleware": []
     },
     "/servers/(id)/edit": { 
         "methods": [ "POST" ],
-        "action": "server_controller.set_server",
+        "action": "server.set_server",
         "middleware": []
     },
     "/servers/(id)/store": { 
         "methods": [ "POST" ],
-        "action": "server_controller.store_replay",
+        "action": "server.store_replay",
         "middleware": [ "hasbottoken" ]
     },
     "/guilds/(guild)/channels": { 
@@ -39,12 +38,12 @@ routes = {
     },
     "/join/(id)": { 
         "methods": [ "POST" ],
-        "action": "server_controller.join",
+        "action": "server.join",
         "middleware": [ "hasbottoken" ]
     },
     "/leave/(id)": { 
         "methods": [ "POST" ],
-        "action": "server_controller.leave",
+        "action": "server.leave",
         "middleware": [ "hasbottoken" ]
     },
     "/ping": { 

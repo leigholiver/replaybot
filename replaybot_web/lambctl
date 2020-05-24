@@ -1,14 +1,21 @@
 #!/usr/bin/env python3
 import sys, os
+from framework.util.runner import runner
+args = sys.argv
 sys.path.insert(0,os.path.dirname(os.path.realpath(__file__)) + "/api")
 
-try:
-    cmd = sys.argv[1].lower()
-    c = getattr(getattr(__import__("commands." + cmd), cmd), cmd)
-except Exception as e:
-    print(e)
-    print("Unknown Command")
+if len(args) == 1:
+    print("you must specify a command to run")
     sys.exit(1)
 
-c = c()
-c.run(sys.argv[2:])
+try:
+    with open('secrets.env') as f:
+        os.environ.update(
+            line.replace('export ', '', 1).strip().split('=', 1) for line in f
+            if 'export' in line
+        )
+except:
+    pass
+
+result = runner().run(args[1:])
+sys.exit(0 if result else 1)

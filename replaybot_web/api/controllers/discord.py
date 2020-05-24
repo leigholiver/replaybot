@@ -1,13 +1,20 @@
 import os, requests
-from support.lamb.Controller import Controller
+from framework.lamb.controller import controller
 from models.server import server
 from models.creds import creds
 
-API_ENDPOINT = 'https://discordapp.com/api'
-GUILD_TEXT = 0 # indicator in discord api for text channel
+FRONTEND_DISCORD_ROUTE = "/discord"
+LOCAL_DEV_ENDPOINT     = "http://localhost:3000"
+API_ENDPOINT           = 'https://discordapp.com/api'
+GUILD_TEXT             = 0 # indicator in discord api for text channel
 
-class discord(Controller):
-
+class discord(controller):
+    def __init__(self):
+        self.redirect_uri = os.getenv('REDIRECT_URI')
+        if not self.redirect_uri:
+            self.redirect_uri = LOCAL_DEV_ENDPOINT
+        self.redirect_uri += FRONTEND_DISCORD_ROUTE
+        
     def exchange_code(self, event):
         code = self.query(event, 'code')
         if not code:
@@ -17,7 +24,7 @@ class discord(Controller):
             'client_secret': os.getenv('CLIENT_SECRET'),
             'grant_type': 'authorization_code',
             'code': code,
-            'redirect_uri': os.getenv('REDIRECT_URI'),
+            'redirect_uri': self.redirect_uri,
             'scope': 'identify guilds'
         }
 
@@ -94,5 +101,5 @@ class discord(Controller):
             r.raise_for_status()
             return r
         except Exception as err:
-            print(f'Other error occurred: {err}')  # Python 3.6
+            pass
         return False
