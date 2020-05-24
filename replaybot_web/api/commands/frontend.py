@@ -5,13 +5,15 @@ from framework.util.env_util import env_util
 
 class frontend(command):
     def run(self, data):
-        hasher  = hash_util()
-        e_util  = env_util()
-        env     = e_util.get_full()
+        hasher   = hash_util()
+        e_util   = env_util()
+        env      = e_util.get_full()
+        env_name = e_util.get_name(True)
         
         api_url      = "http://localhost:5000/api"
         redirect_uri = "http://localhost:3000/discord"
-        client_id    = os.getenv('PRODUCTION_CLIENT_ID') if os.getenv('LAMB_ENV') == "master" else os.getenv('CLIENT_ID')
+        client_id    = os.getenv('PRODUCTION_CLIENT_ID') if env_name == "master" else os.getenv('CLIENT_ID')
+
         if 'domain_name' in env.keys():
             api_url      = "https://" + env['domain_name'] + "/api"
             redirect_uri = "https://" + env['domain_name'] + "/discord"
