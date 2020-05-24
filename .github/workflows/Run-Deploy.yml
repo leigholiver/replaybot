@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - staging
+      - preprod
     paths:
       - ".github/workflows/Run-Deploy.yml"
       - "replaybot_web/**"
