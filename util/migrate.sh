@@ -23,7 +23,7 @@ DATA=$(aws dynamodb scan --table-name $SOURCE_TABLE --max-items $MAX_ITEMS)
 echo $DATA | cat > "$SOURCE_TABLE-$INDEX.json"
 
 nextToken=$(echo $DATA | jq '.NextToken')
-while [[ "${nextToken}" != "" ]]
+while [ -z $nextToken ]
 do
     DATA=$(aws dynamodb scan --table-name $SOURCE_TABLE --max-items $MAX_ITEMS --starting-token $nextToken)
     ((INDEX+=1))
