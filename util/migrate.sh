@@ -16,14 +16,14 @@ if [ -z "$DEST_TABLE" ]; then
     return 1
 fi
 
-mkdir -p tmp && cd tmp
+mkdir -p replaybot_migration_tmp && cd replaybot_migration_tmp
 
 DATA=$(aws dynamodb scan --table-name $SOURCE_TABLE --max-items $MAX_ITEMS)
 ((INDEX+=1))
 echo $DATA | cat > "$SOURCE_TABLE-$INDEX.json"
 
 nextToken=$(echo $DATA | jq '.NextToken')
-while [ -z $nextToken ]
+while [ $nextToken != null ]
 do
     DATA=$(aws dynamodb scan --table-name $SOURCE_TABLE --max-items $MAX_ITEMS --starting-token $nextToken)
     ((INDEX+=1))
@@ -37,3 +37,4 @@ for x in `ls *$SOURCE_TABLE*.json`; do
 done
 
 cd ..
+rm -rf replaybot_migration_tmp
