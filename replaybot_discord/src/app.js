@@ -29,7 +29,7 @@ client.on('message', message => {
                         
                         let channel = message.channel;
                         if(server.replyTo != "reply") {
-                            channel = message.guild.channels.get(server.replyTo);
+                            channel = message.guild.channels.cache.get(server.replyTo);
                         }
                         postEmbed(channel, message, attachment, (message, attachment, replayData) => {
                             store({
@@ -40,8 +40,9 @@ client.on('message', message => {
                         });
                     }
                 })
-                .catch(() => {
+                .catch((e) => {
                     // couldn't reach the web service - default to basic reply mode
+                    console.log(e)
                     postEmbed(message.channel, message, attachment, (message, attachment, replayData) => {});
                 });
             }
