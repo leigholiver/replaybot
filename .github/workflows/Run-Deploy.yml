@@ -25,6 +25,11 @@ jobs:
           pip install -r framework/requirements.txt
           pip install -r api/packages.txt
           
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: |
+          yarn install
+
       - name: Run deployment
         working-directory: ./replaybot_web
         run: |
