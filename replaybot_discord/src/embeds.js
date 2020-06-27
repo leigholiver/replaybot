@@ -21,11 +21,11 @@ function getEmbed(author, message, url, replayData) {
         teams[player['team_id']]['raceString'] += player['race'][0];
 
         let p = "";
-        if(player['clan'] != null) {
+        if(player['clan'] != null && player['clan'] != "") {
             p += `<${player['clan']}> `;
         }
         let mmr = "";
-        if(player['MMR'] > 0) {
+        if(player['mmr'] > 0) {
             mmr = `- ${player['mmr']} mmr `
         }
 
@@ -46,7 +46,7 @@ function getEmbed(author, message, url, replayData) {
         });
     });
     
-    let raceString = teams.map(a => a.raceString).join("v");
+    let raceString = teams.filter(a => a.raceString !== "").map(a => a.raceString).join("v");
     let winnerString = winners.join("\n");
     if(winnerString == "") {
         winnerString = "Undecided"
@@ -63,7 +63,7 @@ function getEmbed(author, message, url, replayData) {
             title: `${raceString} on ${replayData['map']}`,
             description: description,
             url: url,
-            timestamp: new Date(replayData['timeUTC']),
+            timestamp: new Date(replayData['timeUTC'] * 1000), // unix time to js time
             fields: [
                 {
                     name: "Winner",

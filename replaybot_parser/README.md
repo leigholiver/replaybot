@@ -12,33 +12,39 @@ returns pong if everything is ok
 
 `sudo docker run --rm -p8119:80 --name replaybot_parser replaybot_parser`
 
-
 example output:
 ```{
     "duration": "18m38s",
-    "map": "Imperio eterno EE",
-    "timeUTC": 1580580481469,
+    "map":      "Triton LE",
+    "map_hash": "757d1071a3408c716b1c68b1aea4cf645391ae18d9ea48819161723566aa3908"
+    "timeUTC":  1580580481469,
     "players": [
         {
-            "clan": "GeekA",
-            "team_id": 0,
-            "race": "Protoss",
-            "name": "DarthJulius",
-            "result": "Win",
-            "apm": 145,
-            "profile_url": "https://starcraft2.com/en-gb/profile/2/1/8886",
-            "mmr": 3198
+            "clan":        "CoolClan",
+            "team_id":     1,
+            "race":        "Protoss",
+            "name":        "LiteralChamp",
+            "result":      "Win",
+            "apm":         145,
+            "profile_url": "https://starcraft2.com/en-gb/profile/2/1/45674357",
+            "mmr":         3198,
+            color:         {"r": 28, "g": 167, "b": 234, "a": 255, "name": "Teal"}
+            is_ai:         false,
+            is_random:     false
         },
         {
-            "clan": "GeekA",
-            "team_id": 1,
-            "race": "Terran",
-            "name": "Oconor",
-            "result": "Loss",
-            "apm": 114,
-            "profile_url": "https://starcraft2.com/en-gb/profile/1/1/7281766",
-            "mmr": 2793
-        }
+            "clan":        "",
+            "team_id":     2,
+            "race":        "Terran",
+            "name":        "LosingPlayer",
+            "result":      "Loss",
+            "apm":         402,
+            "profile_url": "https://starcraft2.com/en-gb/profile/2/1/236523236",
+            "mmr":         2351,
+            color:         {"r": 28, "g": 167, "b": 234, "a": 255, "name": "Teal"}
+            is_ai:         false,
+            is_random:     false
+        },
     ]
 }
 ``` 
