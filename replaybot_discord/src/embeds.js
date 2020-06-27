@@ -58,7 +58,7 @@ function getEmbed(author, message, url, replayData) {
         "embed": {
             author: {
                 name: author.username,
-                icon_url: author.avatarURL
+                icon_url: author.avatarURL()
             },
             title: `${raceString} on ${replayData['map']}`,
             description: description,
