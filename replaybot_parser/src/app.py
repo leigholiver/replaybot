@@ -25,9 +25,13 @@ def parse():
             f.close()
 
         output = parse_replay(filename)
+        
+        # remove tempfile todo: cron rather than each request
+        os.remove(filename)
+
         if not output:
             return Response(500)
-        print(output)
+        
         return Response(response=json.dumps(output),
                     status=200,
                     mimetype="application/json")
