@@ -1,5 +1,5 @@
 FROM alpine:3.11
-RUN apk add py-pip g++ linux-headers python-dev
+RUN apk add py-pip g++ linux-headers python-dev git
 WORKDIR /app
 COPY ./config/requirements.txt /app
 RUN pip install -r ./requirements.txt

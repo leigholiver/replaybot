@@ -3,4 +3,4 @@ Flask
 mpyq
 uuid
 requests
-sc2reader
+git+git://github.com/ggtracker/sc2reader@upstream#egg=sc2reader
