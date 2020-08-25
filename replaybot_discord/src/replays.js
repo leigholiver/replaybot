@@ -1,3 +1,4 @@
+const newrelic = require('newrelic');
 /**
     checks if a url is an sc2replay file
     @param url - the attachment url to check
@@ -19,6 +20,7 @@ async function getReplayMetadata(url) {
     }
     catch(e) {
         console.error(`Error contacting replay parsing service: ${e}`)
+        newrelic.noticeError(e)
     }
     return false;
 }

@@ -1,3 +1,4 @@
+const newrelic = require('newrelic');
 const axios = require('axios');
 
 function store(rep) {
@@ -38,10 +39,10 @@ function leave(server) {
 }
 
 async function request(method, url, data = null, headers = {}) {
-    headers = { 
-        "Content-Type": "application/json", 
+    headers = {
+        "Content-Type": "application/json",
         "X-Replaybot-Token": process.env.BOT_SHARED_KEY,
-        ...headers 
+        ...headers
     }
     try {
         const response = await axios({
@@ -54,6 +55,7 @@ async function request(method, url, data = null, headers = {}) {
     }
     catch(e) {
         console.log(e);
+        newrelic.noticeError(e);
         return false;
     }
 }

@@ -1,3 +1,4 @@
+const newrelic = require('newrelic');
 const { join, leave, store, getServer } = require('./api.js');
 const { getEmbed } = require('./embeds.js');
 const { isSC2Replay, getReplayMetadata } = require('./replays.js');
@@ -26,7 +27,7 @@ client.on('message', message => {
                 getServer(message.guild.id).then(server => {
                     if((server.listen.length == 0 || server.listen.includes(message.channel.id))
                         && !server.exclude.includes(message.channel.id)) {
-                        
+
                         let channel = message.channel;
                         if(server.replyTo != "reply") {
                             channel = message.guild.channels.cache.get(server.replyTo);
@@ -43,6 +44,7 @@ client.on('message', message => {
                 .catch((e) => {
                     // couldn't reach the web service - default to basic reply mode
                     console.log(e)
+                    newrelic.noticeError(e)
                     postEmbed(message.channel, message, attachment, (message, attachment, replayData) => {});
                 });
             }
@@ -52,7 +54,7 @@ client.on('message', message => {
 
 /*
     do the thing
-*/ 
+*/
 function postEmbed(channel, message, attachment, callback) {
     getReplayMetadata(attachment.url).then( replayData => {
         if(!replayData) {
@@ -73,7 +75,7 @@ function serverChanges() {
     catch(err) {
         console.log("error getting guilds");
         console.log(client.guilds.cache);
-    }     
+    }
 
     newServers.filter(item => !servers.includes(item)).forEach(item => {
         join(item.id);
