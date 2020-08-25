@@ -5,12 +5,17 @@ services:
         image: leigholiver/replaybot_parser
         build: ./replaybot_parser
         network_mode: host
+        environment:
+            - NEW_RELIC_LICENSE_KEY
+            - "NEW_RELIC_APP_NAME=replaybot_parser"
 
     discord:
         image: leigholiver/replaybot_discord
         build: ./replaybot_discord
         network_mode: host
         environment:
+            - NEW_RELIC_LICENSE_KEY
+            - "NEW_RELIC_APP_NAME=replaybot_discord"
             - BOT_TOKEN
             - BOT_SHARED_KEY
             - "PARSER_ENDPOINT=http://localhost:5001"
