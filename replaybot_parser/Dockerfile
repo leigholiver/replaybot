@@ -9,6 +9,9 @@ RUN apk add nginx py-pip
 COPY --from=0 /usr/lib/python2.7/site-packages /usr/lib/python2.7/site-packages
 COPY --from=0 /usr/bin/uwsgi /usr/bin/uwsgi
 
+RUN apk add py-pip
+RUN pip install newrelic
+
 COPY config /config
 COPY config/nginx.conf /etc/nginx/nginx.conf
 
