@@ -23,7 +23,7 @@ module "piphash" {
 
 resource "null_resource" "package_deps" {
   triggers = {
-    reqs_changed = module.piphash.hashes[0]
+    always = uuid()
   }
 
   provisioner "local-exec" {
@@ -34,8 +34,7 @@ resource "null_resource" "package_deps" {
 resource "null_resource" "package_dirs" {
   count = length(local.dir_paths)
   triggers = {
-    pip_changed = null_resource.package_deps.id
-    src_changed = module.hashes.hashes[count.index]
+    always = uuid()
   }
 
   provisioner "local-exec" {

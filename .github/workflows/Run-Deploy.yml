@@ -43,4 +43,4 @@ jobs:
         working-directory: ./web
         run: |
           echo "${{ secrets.secrets }}" > secrets.env
-          ./lambctl deploy -y
+          ./lambctl deploy -y --live
