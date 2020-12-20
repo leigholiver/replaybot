@@ -56,5 +56,5 @@ data "archive_file" "lambda_zip" {
   type        = "zip"
   source_dir  = data.null_data_source.wait_for_packaging.outputs["build_dir"]
   output_path = var.zip_path
-  depends_on = [null_resource.package_dirs[0].id, null_resource.package_deps.id]
+  depends_on = [null_resource.package_dirs[0], null_resource.package_deps]
 }
