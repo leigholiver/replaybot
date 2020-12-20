@@ -10,7 +10,7 @@ def hash_path(path, ignore = []):
     elif Path(path).is_file():
         file_hash = md5_file(path, ignore);
     else:
-        raise Exception("invalid path: %s" % path)
+        return 0
     return file_hash
 
 def md5_file(filename: Union[str, Path], ignore) -> str:

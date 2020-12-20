@@ -5,7 +5,7 @@ variable "paths" {
 
 data "external" "src_hash" {
   count   = length(var.paths)
-  program = ["python", "${path.module}/hashpath.py", var.paths[count.index]]
+  program = ["python3", "${path.module}/hashpath.py", var.paths[count.index]]
 }
 
 output "hashes" {
