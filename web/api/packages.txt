@@ -1,0 +1,4 @@
+cffi
+boto3
+requests
+pyjwt

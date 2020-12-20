@@ -1,23 +1,48 @@
 version: '3.4'
 
 services:
-    parser:
-        image: leigholiver/replaybot_parser
-        build: ./replaybot_parser
-        network_mode: host
-        environment:
-            - NEW_RELIC_LICENSE_KEY
-            - "NEW_RELIC_APP_NAME=replaybot_parser"
+  parser:
+    image: leigholiver/replaybot_parser
+    build: ./parser
+    network_mode: host
+    environment:
+      - NEW_RELIC_LICENSE_KEY
+      - "NEW_RELIC_APP_NAME=replaybot_parser_dev"
 
-    discord:
-        image: leigholiver/replaybot_discord
-        build: ./replaybot_discord
-        network_mode: host
-        environment:
-            - NEW_RELIC_LICENSE_KEY
-            - "NEW_RELIC_APP_NAME=replaybot_discord"
-            - BOT_TOKEN
-            - BOT_SHARED_KEY
-            - "PARSER_ENDPOINT=http://localhost:5001"
-            - "API_ENDPOINT=http://localhost:5000/api"
-            #- "API_ENDPOINT=https://preprod.replaybot.com/api"
+  discord:
+    image: leigholiver/replaybot_discord
+    build: ./discord
+    network_mode: host
+    environment:
+      - NEW_RELIC_LICENSE_KEY
+      - "NEW_RELIC_APP_NAME=replaybot_discord_dev"
+      - BOT_TOKEN
+      - BOT_SHARED_KEY
+      - "PARSER_ENDPOINT=http://localhost:5001"
+      - "API_ENDPOINT=http://localhost:5000/api"
+
+  search:
+    image: leigholiver/replaybot_search
+    build: ./search
+    network_mode: host
+    environment:
+      - NEW_RELIC_LICENSE_KEY
+      - "NEW_RELIC_APP_NAME=replaybot_search_dev"
+      - ELASTICSEARCH_PASSWORD
+      - "ELASTICSEARCH_ENDPOINT=http://localhost:9200"
+
+  elasticsearch:
+    image: elasticsearch:7.7.0
+    environment:
+      - "discovery.type=single-node"
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms128m -Xmx128m"
+    ports:
+      - 127.0.0.1:9200:9200
+      - 127.0.0.1:9300:9300
+    deploy:
+      resources:
+        limits:
+          memory: 256m
+        reservations:
+          memory: 128m

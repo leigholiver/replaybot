@@ -1,0 +1,22 @@
+#!/usr/bin/env python3
+import sys, os
+from framework.util.runner import runner
+from framework.util.env_util import env_util
+
+args = sys.argv
+sys.path.insert(0,os.path.dirname(os.path.realpath(__file__)) + "/api")
+
+if len(args) == 1:
+    print("you must specify a command to run")
+    sys.exit(1)
+
+# set up the env vars
+env = env_util()
+env.setup_env(args)
+env_vars = env.get_full()
+env.process_secrets(env_vars)
+os.environ.update(env_vars['api_config']['env_vars'])
+
+# run the command
+result = runner().run(args[1:])
+sys.exit(0 if result else 1)

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: parser
+  labels:
+    app: parser
+spec:
+  selector:
+    matchLabels:
+      app: parser
+  template:
+    metadata:
+      labels:
+        app: parser
+    spec:
+      containers:
+        - name: parser
+          image: leigholiver/replaybot_parser
+          resources:
+            limits:
+              cpu: 150m
+              memory: 300Mi
+          env:
+            - name: NEW_RELIC_APP_NAME
+              value: replaybot_parser
+            - name: NEW_RELIC_LICENSE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: replaybot-secrets
+                  key: NEW_RELIC_LICENSE_KEY
+          ports:
+            - containerPort: 5001
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: parser
+spec:
+  selector:
+    app: parser
+  ports:
+    - protocol: TCP
+      port: 5001
+      targetPort: 5001

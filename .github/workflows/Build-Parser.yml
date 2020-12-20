@@ -5,7 +5,7 @@ on:
       - master
     paths:
       - ".github/workflows/Build-Parser.yml"
-      - "replaybot_parser/**"
+      - "parser/**"
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,7 +15,7 @@ jobs:
           ref: ${{ github.ref }}
 
       - name: Build Image
-        working-directory: ./replaybot_parser
+        working-directory: ./parser
         run: |
           docker build -t ${{ secrets.dockerhubUsername }}/replaybot_parser .
       

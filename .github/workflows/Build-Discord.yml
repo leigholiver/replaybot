@@ -5,7 +5,7 @@ on:
       - master
     paths:
       - ".github/workflows/Build-Discord.yml"
-      - "replaybot_discord/**"
+      - "discord/**"
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,7 +16,7 @@ jobs:
 
       - name: Build Image
         run: |
-          docker build -t ${{ secrets.dockerhubUsername }}/replaybot_discord replaybot_discord
+          docker build -t ${{ secrets.dockerhubUsername }}/replaybot_discord discord
       
       - name: Login to docker repos
         run: echo ${{ secrets.dockerhubPassword }} | docker login -u ${{ secrets.dockerhubUsername }} --password-stdin

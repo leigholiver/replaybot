@@ -1,0 +1,32 @@
+name: Kubernetes
+on:
+  push:
+    branches:
+      - preprod
+    paths:
+      - ".github/workflows/Kubernetes.yml"
+      - "kubernetes/base/**"
+      - "kubernetes/overlay/prod/**"
+jobs:
+  Deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Run Kustomize
+        working-directory: ./kubernetes
+        run: kubectl kustomize overlay/preprod > replaybot-prod.yml
+
+      - name: Commit to platform repo
+        working-directory: ./kubernetes
+        uses: dmnemec/copy_file_to_another_repo_action@v1.0.4
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source_file: replaybot-prod.yml
+          destination_repo: leigholiver/platform
+          destination_folder: resources/replaybot
+          user_email: leighdoliver@gmail.com
+          user_name: leigholiver

@@ -6,7 +6,11 @@ on:
       - preprod
     paths:
       - ".github/workflows/Run-Deploy.yml"
-      - "replaybot_web/**"
+      - "web/api/**"
+      - "web/environment/**"
+      - "web/framework/**"
+      - "web/frontend/**"
+      - "web/main.tf"
 jobs:
   Deployment:
     runs-on: ubuntu-latest
@@ -19,19 +23,19 @@ jobs:
           python-version: '3.7.x'
 
       - name: Install dependencies
-        working-directory: ./replaybot_web
+        working-directory: ./web
         run: |
           python -m pip install --upgrade pip
           pip install -r framework/requirements.txt
           pip install -r api/packages.txt
-          
+
       - name: Install frontend dependencies
-        working-directory: ./replaybot_web/frontend
+        working-directory: ./web/frontend
         run: |
           yarn install
 
       - name: Run deployment
-        working-directory: ./replaybot_web
+        working-directory: ./web
         run: |
           echo "${{ secrets.secrets }}" > secrets.env
           ./lambctl deploy -y

@@ -1,0 +1,16 @@
+env_name: testing
+branch_specifier: elasticsearch
+domain_name: replaybot.nydus.club
+lamb_config:
+  api_domain_name: replaybot-api.nydus.club
+  cloudflare_zone: "{{ secrets.ALT_CLOUDFLARE_ZONE }}"
+  allowed_ips:
+  - "{{ secrets.PREPROD_ALLOWED_IP }}"
+  cloudflare_on: false
+  waf_on: false
+api_config:
+  env_vars:
+    API_URL: https://replaybot-api.nydus.club/api
+    REDIRECT_URI: https://replaybot-api.nydus.club/api/discord
+    FRONTEND_LOGIN_ENDPOINT: https://replaybot.nydus.club/login
+    SEARCH_ENDPOINT: http://replaybot-search.nydus.club

@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: parser
+spec:
+  template:
+    spec:
+      containers:
+        - name: parser
+          image: leigholiver/replaybot_parser
+          env:
+            - name: NEW_RELIC_APP_NAME
+              value: replaybot_parser_testing

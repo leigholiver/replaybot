@@ -1,9 +1,0 @@
-.terraform
-terraform.tfstate*
-*__pycache__
-
-secrets.env
-.build/*
-.localdb/*
-env.auto.tfvars.json
-framework/pkghash.json

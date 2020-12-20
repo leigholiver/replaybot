@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: search
+spec:
+  template:
+    spec:
+      containers:
+        - name: search
+          image: leigholiver/replaybot_search
+          env:
+            - name: NEW_RELIC_APP_NAME
+              value: replaybot_search_testing
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: search
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: replaybot-search.nydus.club
+spec:
+  tls:
+  - hosts:
+    - replaybot-search.nydus.club
+    secretName: search-tls
+  rules:
+  - host: replaybot-search.nydus.club
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: search
+            port:
+              number: 80

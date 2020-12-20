@@ -14,4 +14,4 @@ if [ -z "$OUTPUT" ]; then
     return 1
 fi
 
-aws dynamodb scan --table-name $SOURCE_TABLE | jq -f $SCRIPT_DIR/unmarshall.jq | jq '.Items' > $OUTPUT
+aws dynamodb scan --table-name $SOURCE_TABLE | jq -f $SCRIPT_DIR/decode.jq | jq '.Items' > $OUTPUT

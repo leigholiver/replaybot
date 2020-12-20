@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discord
+spec:
+  template:
+    spec:
+      containers:
+        - name: discord
+          image: leigholiver/replaybot_discord
+          env:
+            - name: NEW_RELIC_APP_NAME
+              value: replaybot_discord_testing
+            - name: API_ENDPOINT
+              value: https://replaybot-api.nydus.club/api

@@ -1,0 +1,27 @@
+name: Build-Discord
+on:
+  push:
+    branches:
+      - preprod
+    paths:
+      - ".github/workflows/Build-Discord.yml"
+      - "discord/**"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Build Image
+        run: |
+          docker build -t ${{ secrets.dockerhubUsername }}/replaybot_discord_preprod discord
+
+      - name: Login to docker repos
+        run: echo ${{ secrets.dockerhubPassword }} | docker login -u ${{ secrets.dockerhubUsername }} --password-stdin
+
+      - name: Tag and push
+        run: |
+          docker tag ${{ secrets.dockerhubUsername }}/replaybot_discord_preprod ${{ secrets.dockerhubUsername }}/replaybot_discord_preprod:latest
+          docker push ${{ secrets.dockerhubUsername }}/replaybot_discord_preprod:latest

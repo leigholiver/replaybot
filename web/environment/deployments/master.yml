@@ -1,0 +1,18 @@
+env_name: master
+branch_specifier: master
+domain_name: replaybot.com
+lamb_config:
+  api_domain_name: api.replaybot.com
+  cloudflare_on: false
+  waf_on: false
+api_config:
+  env_vars:
+    API_URL: https://api.replaybot.com/api
+    REDIRECT_URI: https://api.replaybot.com/api/discord
+    FRONTEND_LOGIN_ENDPOINT: https://replaybot.com/login
+    SEARCH_ENDPOINT: http://search.replaybot.com
+    CLIENT_ID: "{{ secrets.PRODUCTION_CLIENT_ID }}"
+    CLIENT_SECRET: "{{ secrets.PRODUCTION_CLIENT_SECRET }}"
+    BOT_TOKEN: "{{ secrets.PRODUCTION_BOT_TOKEN }}"
+    BOT_SHARED_KEY: "{{ secrets.BOT_SHARED_KEY }}"
+    GA_ID: UA-180824262-2

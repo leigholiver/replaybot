@@ -1,0 +1,15 @@
+env_name: preprod
+branch_specifier: preprod
+domain_name: preprod.replaybot.com
+lamb_config:
+  api_domain_name: api-preprod.replaybot.com
+  allowed_ips:
+  - "{{ secrets.PREPROD_ALLOWED_IP }}"
+  cloudflare_on: false
+  waf_on: false
+api_config:
+  env_vars:
+    API_URL: https://api-preprod.replaybot.com/api
+    REDIRECT_URI: https://api-preprod.replaybot.com/api/discord
+    FRONTEND_LOGIN_ENDPOINT: https://preprod.replaybot.com/login
+    SEARCH_ENDPOINT: http://search-preprod.replaybot.com

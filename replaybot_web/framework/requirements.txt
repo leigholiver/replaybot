@@ -1,5 +1,0 @@
-jinja2
-boto3
-gitpython
-flask
-tinydb

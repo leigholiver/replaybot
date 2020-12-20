@@ -1,0 +1,28 @@
+name: Build-Search
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - ".github/workflows/Build-Search.yml"
+      - "search/**"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Build Image
+        working-directory: ./search
+        run: |
+          docker build -t ${{ secrets.dockerhubUsername }}/replaybot_search .
+      
+      - name: Login to docker repos
+        run: echo ${{ secrets.dockerhubPassword }} | docker login -u ${{ secrets.dockerhubUsername }} --password-stdin
+      
+      - name: Tag and push
+        run: |
+          docker tag ${{ secrets.dockerhubUsername }}/replaybot_search ${{ secrets.dockerhubUsername }}/replaybot_search:latest
+          docker push ${{ secrets.dockerhubUsername }}/replaybot_search:latest

@@ -1,0 +1,12 @@
+.terraform
+terraform.tfstate*
+*__pycache__*
+*.pyc
+
+secrets.env
+.build/*
+.localdb/*
+env.auto.tfvars.json
+framework/pkghash.json
+
+migration/*

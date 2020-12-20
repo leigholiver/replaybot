@@ -1,0 +1,19 @@
+.__hover {
+    position: relative;
+}
+
+.__hover .__hover_hover {
+    display:  none;
+    z-index: 1;
+    position: fixed;
+    margin-top: -2rem;
+    margin-left: 2rem;
+}
+.__hover .__hover_hover.__hover_right {
+    right: 0;
+    margin-right: 5rem;
+}
+
+.__hover:hover .__hover_hover {
+    display: block;
+}

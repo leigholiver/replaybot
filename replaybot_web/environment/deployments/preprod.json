@@ -1,9 +1,0 @@
-{
-    "env_name": "preprod",
-    "domain_name": "preprod.replaybot.com",
-    "branch_specifier": "preprod",
-    "allowed_ips": [ "{{ secrets.PREPROD_ALLOWED_IP }}" ],
-    "env_vars": {
-        "REDIRECT_URI": "https://preprod.replaybot.com"
-    }
-}

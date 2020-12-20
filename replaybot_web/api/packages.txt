@@ -1,3 +1,0 @@
-cffi
-boto3
-requests

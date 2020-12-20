@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discord
+  labels:
+    app: discord
+spec:
+  selector:
+    matchLabels:
+      app: discord
+  template:
+    metadata:
+      labels:
+        app: discord
+    spec:
+      containers:
+        - name: discord
+          image: leigholiver/replaybot_discord
+          resources:
+            limits:
+              cpu: 100m
+              memory: 100Mi
+          env:
+            - name: NEW_RELIC_APP_NAME
+              value: replaybot_discord
+            - name: NEW_RELIC_LICENSE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: replaybot-secrets
+                  key: NEW_RELIC_LICENSE_KEY
+            - name: BOT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: replaybot-secrets
+                  key: BOT_TOKEN
+            - name: BOT_SHARED_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: replaybot-secrets
+                  key: BOT_SHARED_KEY
+            - name: PARSER_ENDPOINT
+              value: http://parser:5001
+            - name: API_ENDPOINT
+              value: https://api.replaybot.com/api
