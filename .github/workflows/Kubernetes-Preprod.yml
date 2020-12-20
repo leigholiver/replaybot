@@ -21,11 +21,10 @@ jobs:
 
       - name: Commit to platform repo
         uses: dmnemec/copy_file_to_another_repo_action@v1.0.4
-        working-directory: ./kubernetes
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source_file: replaybot-preprod.yml
+          source_file: kubernetes/replaybot-preprod.yml
           destination_repo: leigholiver/platform
           destination_folder: resources/replaybot
           user_email: leighdoliver@gmail.com

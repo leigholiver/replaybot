@@ -11,7 +11,7 @@ resource "aws_dynamodb_table" "db_table" {
     type = "S"
   }
 
-  # expiries  
+  # expiries
   dynamic "ttl" {
     for_each = var.tables[count.index].expires != "" ? [true] : []
     content {
@@ -102,6 +102,6 @@ EOF
 resource "aws_iam_policy_attachment" "db_attachment" {
   count      = length(aws_dynamodb_table.db_table)
   name       = "${aws_dynamodb_table.db_table[count.index].name}_attachment"
-  roles      = ["${aws_iam_role.role.name}"]
+  roles      = [aws_iam_role.role.name]
   policy_arn = aws_iam_policy.db_policy[count.index].arn
 }

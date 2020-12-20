@@ -2,7 +2,7 @@ name: Kubernetes
 on:
   push:
     branches:
-      - preprod
+      - master
     paths:
       - ".github/workflows/Kubernetes.yml"
       - "kubernetes/base/**"
@@ -21,11 +21,10 @@ jobs:
 
       - name: Commit to platform repo
         uses: dmnemec/copy_file_to_another_repo_action@v1.0.4
-        working-directory: ./kubernetes
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source_file: replaybot-prod.yml
+          source_file: kubernetes/replaybot-prod.yml
           destination_repo: leigholiver/platform
           destination_folder: resources/replaybot
           user_email: leighdoliver@gmail.com
