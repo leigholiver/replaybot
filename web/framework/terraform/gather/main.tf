@@ -39,7 +39,7 @@ resource "null_resource" "package_dirs" {
   }
 
   provisioner "local-exec" {
-    command = "${local.dir_paths[count.index].basepath == "" ? "" : "mkdir -p ${var.build_dir}/${local.dir_paths[count.index].basepath} && "} cp -r ${local.dir_paths[count.index].dir}/* ${var.build_dir}/${local.dir_paths[count.index].basepath}"
+    command = "mkdir -p ${var.build_dir} && ${local.dir_paths[count.index].basepath == "" ? "" : "mkdir -p ${var.build_dir}/${local.dir_paths[count.index].basepath} && "} cp -r ${local.dir_paths[count.index].dir}/* ${var.build_dir}/${local.dir_paths[count.index].basepath}"
   }
 }
 
@@ -56,5 +56,5 @@ data "archive_file" "lambda_zip" {
   type        = "zip"
   source_dir  = data.null_data_source.wait_for_packaging.outputs["build_dir"]
   output_path = var.zip_path
-  depends_on = [null_resource.package_dirs[0], null_resource.package_deps]
+  depends_on = [null_resource.package_dirs, null_resource.package_deps]
 }
