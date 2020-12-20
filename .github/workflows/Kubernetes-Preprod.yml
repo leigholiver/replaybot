@@ -20,8 +20,8 @@ jobs:
         run: kubectl kustomize overlay/preprod > replaybot-preprod.yml
 
       - name: Commit to platform repo
-        working-directory: ./kubernetes
         uses: dmnemec/copy_file_to_another_repo_action@v1.0.4
+        working-directory: ./kubernetes
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
