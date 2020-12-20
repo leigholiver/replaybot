@@ -18,9 +18,14 @@ jobs:
       - uses: actions/checkout@master
         with:
           ref: ${{ github.ref }}
+
       - uses: actions/setup-python@v1
         with:
           python-version: '3.7.x'
+
+      - uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.12.28
 
       - name: Install dependencies
         working-directory: ./web
