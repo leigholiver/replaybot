@@ -50,6 +50,7 @@ data "null_data_source" "wait_for_packaging" {
     lambda_exporter_id = null_resource.package_dirs[0].id
     build_dir          = var.build_dir
   }
+  depends_on = [null_resource.package_deps]
 }
 
 data "archive_file" "lambda_zip" {
