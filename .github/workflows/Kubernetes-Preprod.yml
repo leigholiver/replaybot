@@ -20,7 +20,7 @@ jobs:
         run: kubectl kustomize overlay/preprod > replaybot-preprod.yml
 
       - name: Commit to platform repo
-        uses: leigholiver/commit-with-deploy-key@v1.0.0
+        uses: leigholiver/commit-with-deploy-key@v1.0.2
         with:
           source: kubernetes/replaybot-preprod.yml
           destination_folder: resources/replaybot
