@@ -25,4 +25,5 @@ jobs:
           source: kubernetes/replaybot-prod.yml
           destination_folder: resources/replaybot
           destination_repo: leigholiver/platform
+          destination_branch: master
           deploy_key: ${{ secrets.DEPLOY_KEY }}
