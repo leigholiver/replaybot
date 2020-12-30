@@ -20,12 +20,9 @@ jobs:
         run: kubectl kustomize overlay/preprod > replaybot-preprod.yml
 
       - name: Commit to platform repo
-        uses: dmnemec/copy_file_to_another_repo_action@v1.0.4
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        uses: leigholiver/commit-with-deploy-key@v1.0.0
         with:
-          source_file: kubernetes/replaybot-preprod.yml
-          destination_repo: leigholiver/platform
+          source: kubernetes/replaybot-preprod.yml
           destination_folder: resources/replaybot
-          user_email: leighdoliver@gmail.com
-          user_name: leigholiver
+          destination_repo: leigholiver/platform
+          deploy_key: ${{ secrets.DEPLOY_KEY }}

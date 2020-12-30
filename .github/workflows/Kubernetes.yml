@@ -17,15 +17,12 @@ jobs:
 
       - name: Run Kustomize
         working-directory: ./kubernetes
-        run: kubectl kustomize overlay/preprod > replaybot-prod.yml
+        run: kubectl kustomize overlay/prod > replaybot-prod.yml
 
       - name: Commit to platform repo
-        uses: dmnemec/copy_file_to_another_repo_action@v1.0.4
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        uses: leigholiver/commit-with-deploy-key@v1.0.0
         with:
-          source_file: kubernetes/replaybot-prod.yml
-          destination_repo: leigholiver/platform
+          source: kubernetes/replaybot-prod.yml
           destination_folder: resources/replaybot
-          user_email: leighdoliver@gmail.com
-          user_name: leigholiver
+          destination_repo: leigholiver/platform
+          deploy_key: ${{ secrets.DEPLOY_KEY }}
